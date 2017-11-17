@@ -8,6 +8,7 @@ exports.getUsers = function(req, res, next) {
     // send json of all users
     res.json(users);
   });
+  res.send('Found some users');
 };
 
 exports.getUserById = function(req, res, next) {

@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const app = express();
 const router = express.Router();
 
+const user = require('./controllers/user-controller.js');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -14,20 +16,27 @@ router.param('id', (req, res, next, id) => {
   next();
 });
 
-// Routing
-//
-app.use('/', router);
-
 // Route to get all songs
 // To post on homepage
 router.route('/')
-.get()
-.post();
+  .get((req, res) => {
+    res.send('Hello!');
+  });
+
+router.route('/users')
+  .get(user.getUsers);
+
+//router.route('/users/:id')
+// .get(user.getUserById);
+
+// Routing
+app.use('/', router);
 
 // Handle 404 Error
 app.use((req, res, next) => {
   const err = new Error('Not Found');
   err.status = 404;
+  res.send("Uh oh, spaghetti-o's, you received a 404 error!");
   next(err);
 });
 
